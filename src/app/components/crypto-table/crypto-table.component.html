@@ -1,0 +1,14 @@
+<table mat-table [dataSource]="cryptocurrencies" class="min-w-full">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let currency" (click)="onSelectCurrency(currency.id)"> {{ currency.name }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef> Price </th>
+    <td mat-cell *matCellDef="let currency"> {{ currency.priceUsd | currency }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['name', 'price']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['name', 'price'];" (click)="onSelectCurrency(row.id)"></tr>
+</table>
