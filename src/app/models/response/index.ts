@@ -1,2 +1,3 @@
 export * from './cryptocurrency.model';
-export * from './get-cryptocurrencies.model';
+export * from './response.model';
+export * from './price-history.model';

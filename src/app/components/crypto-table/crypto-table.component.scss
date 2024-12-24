@@ -2,29 +2,38 @@ table {
   width: 100%;
 }
 
-tr.detail-row {
-  height: 0;
+tr.element-row {
+  transition: background-color 0.3s ease;
 }
 
-tr.element-row:not(.expanded-row):hover {
-  background: whitesmoke;
-  cursor: pointer;
-}
-
-
-.element-row td {
+tr.element-row td {
   border-bottom-width: 0;
 }
 
+tr.element-row:not(.expanded-row):hover {
+  background: #f3f4f6;
+  cursor: pointer;
+}
 
-.element-detail {
+tr.element-row.selected-row {
+  background: #bfdbfe;
+}
+
+tr.detail-row {
+  height: 0;
+  background: white;
+}
+
+tr.detail-row .element-detail {
+  background-color: white;
+  transition: background-color 0.3s ease;
   overflow: hidden;
   display: flex;
 }
 
 .element-diagram {
   min-width: 80px;
-  border: 2px solid black;
+  border: 2px solid #000;
   padding: 8px;
   font-weight: lighter;
   margin: 8px 0;

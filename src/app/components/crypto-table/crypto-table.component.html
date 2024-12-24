@@ -1,11 +1,5 @@
-@if(loading){
-<div class="text-center">
-  <mat-spinner></mat-spinner>
-</div>
-}
-
 @if(error){
-<div class="text-red-500 text-center">{{ error }}</div>
+  <div class="text-red-500 text-center">{{ error }}</div>
 }
 
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
@@ -45,32 +39,24 @@
     <td mat-cell *matCellDef="let element">
       <button mat-icon-button
         (click)="expandedElement = expandedElement === element ? null : element; $event.stopPropagation()">
-        @if(expandedElement === element){
-        <mat-icon>keyboard_arrow_up</mat-icon>
-        }@else {
-        <mat-icon>keyboard_arrow_down</mat-icon>
-        }
+        <mat-icon>{{ expandedElement === element ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
       </button>
     </td>
   </ng-container>
 
   <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length" class="expanded-section">
       @if(expandedElement === element){
-      <app-crypto-chart [currencyId]="element.id"></app-crypto-chart>
-      }
-    </td>
+        <app-crypto-chart [currencyId]="element.id"></app-crypto-chart>
+        }    </td>
   </ng-container>
-
-
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
   <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="element-row"
-    [class.expanded-row]="false" (click)="expandedElement = expandedElement === element ? null : element">
+    [class.selected-row]="expandedElement === element"
+    (click)="expandedElement = expandedElement === element ? null : element">
   </tr>
 
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
-
-
 
 </table>

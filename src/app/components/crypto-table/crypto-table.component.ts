@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { CryptoService } from '../../services/crypto.service';
 import { CommonModule } from '@angular/common';
-import { Cryptocurrency, GetCryptocurrencies } from '../../models/response';
+import { Cryptocurrency } from '../../models/response';
 import { CryptoChartComponent } from '../crypto-chart/crypto-chart.component';
 @Component({
   selector: 'app-crypto-table',
@@ -31,7 +31,6 @@ export class CryptoTableComponent implements OnInit {
   columnsToDisplayWithExpand = ['rank', 'name', 'symbol', 'priceUsd', 'marketCapUsd', 'volumeUsd24Hr', 'expand'];
 
   expandedElement: Cryptocurrency | null = null;
-  loading = true;
   error: string | null = null;
 
   @Output() currencySelected = new EventEmitter<string>();
@@ -43,14 +42,12 @@ export class CryptoTableComponent implements OnInit {
 
   fetchCryptocurrencies() {
     this.cryptoService.getCryptocurrencies().subscribe({
-      next: (data: GetCryptocurrencies) => {
-        this.cryptocurrencies = data.data;
+      next: (data: Cryptocurrency[]) => {
+        this.cryptocurrencies = data;
         this.dataSource.data = this.cryptocurrencies;
-        this.loading = false;
       },
       error: (error) => {
         this.error = 'Failed to load cryptocurrencies. Please try again later.';
-        this.loading = false;
       }
     });
   }

@@ -1,6 +1,10 @@
-<div *ngIf="chartOptions">
-  <highcharts-chart
-    [Highcharts]="Highcharts"
-    [options]="chartOptions">
-  </highcharts-chart>
+@if(loading) {
+<div class="spinner-container">
+  <mat-spinner></mat-spinner>
 </div>
+}
+
+@else if(chartOptions) {
+<highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" style="width: 100%; display: block;">
+</highcharts-chart>
+}
