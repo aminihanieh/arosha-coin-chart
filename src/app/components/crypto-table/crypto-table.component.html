@@ -1,14 +1,76 @@
-<table mat-table [dataSource]="cryptocurrencies" class="min-w-full">
+@if(loading){
+<div class="text-center">
+  <mat-spinner></mat-spinner>
+</div>
+}
+
+@if(error){
+<div class="text-red-500 text-center">{{ error }}</div>
+}
+
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+
+  <ng-container matColumnDef="rank">
+    <th mat-header-cell *matHeaderCellDef> Rank </th>
+    <td mat-cell *matCellDef="let element"> {{element.rank}} </td>
+  </ng-container>
+
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let currency" (click)="onSelectCurrency(currency.id)"> {{ currency.name }} </td>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef> Price </th>
-    <td mat-cell *matCellDef="let currency"> {{ currency.priceUsd | currency }} </td>
+  <ng-container matColumnDef="symbol">
+    <th mat-header-cell *matHeaderCellDef> Symbol </th>
+    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="['name', 'price']"></tr>
-  <tr mat-row *matRowDef="let row; columns: ['name', 'price'];" (click)="onSelectCurrency(row.id)"></tr>
+  <ng-container matColumnDef="priceUsd">
+    <th mat-header-cell *matHeaderCellDef> Price (USD) </th>
+    <td mat-cell *matCellDef="let element"> {{element.priceUsd | currency}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="marketCapUsd">
+    <th mat-header-cell *matHeaderCellDef> Market Cap (USD) </th>
+    <td mat-cell *matCellDef="let element"> {{element.marketCapUsd | currency}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="volumeUsd24Hr">
+    <th mat-header-cell *matHeaderCellDef> Volume (24Hr) </th>
+    <td mat-cell *matCellDef="let element"> {{element.volumeUsd24Hr | currency}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expand">
+    <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button
+        (click)="expandedElement = expandedElement === element ? null : element; $event.stopPropagation()">
+        @if(expandedElement === element){
+        <mat-icon>keyboard_arrow_up</mat-icon>
+        }@else {
+        <mat-icon>keyboard_arrow_down</mat-icon>
+        }
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+      @if(expandedElement === element){
+      <app-crypto-chart [currencyId]="element.id"></app-crypto-chart>
+      }
+    </td>
+  </ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="element-row"
+    [class.expanded-row]="false" (click)="expandedElement = expandedElement === element ? null : element">
+  </tr>
+
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+
+
+
 </table>

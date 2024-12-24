@@ -1,19 +1,14 @@
 import { Component } from '@angular/core';
-import { CryptoChartComponent, CryptoTableComponent } from './components';
+import { CryptoTableComponent } from './components';
 import { CryptoService } from './services/crypto.service';
 
 
 
 @Component({
   selector: 'app-root',
-  template: `
-    <div class="container mx-auto">
-      <app-crypto-table (currencySelected)="onCurrencySelect($event)"></app-crypto-table>
-      <app-crypto-chart [currencyId]="selectedCurrencyId"></app-crypto-chart>
-    </div>
-  `,
+  templateUrl: './app.component.html',
   standalone: true,
-  imports: [CryptoTableComponent, CryptoChartComponent],
+  imports: [CryptoTableComponent],
   providers: [CryptoService]
 })
 export class AppComponent {
