@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { CryptoTableComponent } from './components';
 import { CryptoService } from './services/crypto.service';
+import { CryptoTableComponent } from './components/crypto-table/crypto-table.component';
 
 
 

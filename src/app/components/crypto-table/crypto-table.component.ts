@@ -3,11 +3,12 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { CryptoService } from '../../services/crypto.service';
 import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+
+import { CryptoService } from '../../services/crypto.service';
 import { Cryptocurrency } from '../../models/response';
-import { CryptoChartComponent } from '../crypto-chart/crypto-chart.component';
+import { CryptoChartComponent } from './crypto-chart/crypto-chart.component';
 @Component({
   selector: 'app-crypto-table',
   templateUrl: './crypto-table.component.html',
@@ -34,7 +35,6 @@ export class CryptoTableComponent implements OnInit {
   error: string | null = null;
 
   @Output() currencySelected = new EventEmitter<string>();
-
 
   ngOnInit() {
     this.fetchCryptocurrencies();
